@@ -1,6 +1,6 @@
 # A Mega.nz minecraft server backuper image
 
-This image is meant to be run on a sibling container running (this minecraft server)[https://github.com/debilausaure/docker_slim_minecraft_server] image.
+This image is meant to be run on a sibling container running [this minecraft server](https://github.com/debilausaure/docker_slim_minecraft_server) image.
 Its purpose is to make a compressed tar of the minecraft world running on the sibling container, and to upload it to Mega.nz.
 
 ## Prerequisites
@@ -8,7 +8,7 @@ Its purpose is to make a compressed tar of the minecraft world running on the si
 You must have enabled Rcon on your minecraft server.
 This is done by setting `enable-rcon=true` in your server's `server.properties` file. Be sure to set a password too, otherwise your server will disable it regardless of the value of `enable-rcon`. Password needs to be set in the `rcon-password` field.
 
-You must also create a (Mega.nz)[https://mega.nz/] account, where your world backups will be uploaded.
+You must also create a [Mega.nz](https://mega.nz/) account, where your world backups will be uploaded.
 
 ## Setting up the container
 
@@ -55,5 +55,5 @@ It expects the volume you created for the minecraft server to be mounted on `/ho
 
 This is what the command line might look like:
 ```sh
-docker run --network=your_network_name --env-file ../minecraft.env -v your_minecraft_volume:/home/minecraft/mountpoint minecraft_server_backuper:latest
+docker run --network=your_network_name --env-file ../minecraft.env -v your_minecraft_volume:/home/minecraft/mountpoint --rm minecraft_server_backuper:latest
 ```

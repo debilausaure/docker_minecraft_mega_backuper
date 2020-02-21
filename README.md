@@ -3,10 +3,12 @@
 This image is meant to be run on a sibling container running [this minecraft server](https://github.com/debilausaure/docker_slim_minecraft_server) image.
 Its purpose is to make a compressed tar of the minecraft world running on the sibling container, and to upload it to Mega.nz.
 
+This is based on an original idea by [@scotow](https://github.com/scotow).
+
 ## Prerequisites
 
 You must have enabled Rcon on your minecraft server.
-This is done by setting `enable-rcon=true` in your server's `server.properties` file. Be sure to set a password too, otherwise your server will disable it regardless of the value of `enable-rcon`. Password needs to be set in the `rcon-password` field.
+This is done by setting `enable-rcon=true` in your server's `server.properties` file. Be sure to set a password too, otherwise your server will disregard the value of `enable-rcon`. Password needs to be set in the `rcon-password` field.
 
 You must also create a [Mega.nz](https://mega.nz/) account, where your world backups will be uploaded.
 

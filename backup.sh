@@ -11,7 +11,7 @@ mcrcon -s -H $MC_SERVER_CONTAINER_NAME -p $MC_SERVER_RCON_PASSWORD "say Uploadin
 
 # Uploading backup to Mega.nz
 megatools put -u $MEGA_NZ_EMAIL -p $MEGA_NZ_PASSWORD backup.tar.gz --no-progress --disable-previews\
-   --path /Root/$(date -Iminutes | cut -d '+' -f1 | sed -e 's/T/-/g' -e 's/:/h/g').tar.gz
+   --path /Root/$(date +%Y-%m-%d-%Hh%M).tar.gz
 
 # Announcing success and remaining space on cloud
 mcrcon -s -H $MC_SERVER_CONTAINER_NAME -p $MC_SERVER_RCON_PASSWORD "say Backup done !"\

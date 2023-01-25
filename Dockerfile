@@ -1,11 +1,12 @@
 #Minimal build image
-FROM alpine:3.11 AS builder
+FROM alpine:latest AS builder
 
 RUN apk add --no-cache gcc musl-dev
 
 #Get the statically built megatools binary and extract it
-RUN wget https://megatools.megous.com/builds/experimental/megatools-1.11.0-git-20191107-linux-x86_64.tar.gz -q -O megatools.tar.xz \
- && tar -xzf megatools.tar.xz
+RUN wget https://megatools.megous.com/builds/builds/megatools-1.11.0.20220519-linux-x86_64.tar.gz -q -O megatools.tar.xz \
+ && mkdir -p megatools \
+ && tar -xzf megatools.tar.xz -C megatools --strip-components=1
 
 #Statically compile mcrcon
 RUN wget -q https://raw.githubusercontent.com/Tiiffi/mcrcon/master/mcrcon.c \
@@ -14,7 +15,7 @@ RUN wget -q https://raw.githubusercontent.com/Tiiffi/mcrcon/master/mcrcon.c \
 ################
 
 # Run from alpine
-FROM alpine:3.11
+FROM alpine:latest
 
 # Create a group and user minecraft
 RUN addgroup -g 1002 -S minecraft && adduser minecraft -S -G minecraft -u 1002 -s /sbin/nologin
@@ -22,7 +23,7 @@ RUN addgroup -g 1002 -S minecraft && adduser minecraft -S -G minecraft -u 1002 -
 USER minecraft
 
 # Copy the megatools binary from the builder stage
-COPY --from=builder /megatools-1.11.0-git-20191107-linux-x86_64/megatools /bin/megatools
+COPY --from=builder /megatools/megatools /bin/megatools
 # Copy the mcrcon binary from the builder stage
 COPY --from=builder /mcrcon /bin/mcrcon
 

@@ -10,7 +10,7 @@ This is based on an original idea by [@scotow](https://github.com/scotow).
 You must have enabled Rcon on your minecraft server.
 This is done by setting `enable-rcon=true` in your server's `server.properties` file. Be sure to set a password too, otherwise your server will disregard the value of `enable-rcon`. Password needs to be set in the `rcon-password` field.
 
-You must also create a [Mega.nz](https://mega.nz/) account, where your world backups will be uploaded.
+You must also create a [Mega.io](https://mega.io/) account, where your world backups will be uploaded.
 
 ## Setting up the container
 
@@ -36,8 +36,8 @@ docker network create --driver=bridge your_network_name
 You can then configure the credentials to be used by this image in the provided `minecraft.env` file. This file will not be included inside the image, but will be provided as an argument to your backup container. This has the upside of not revealing your credentials on the command line.
 
 The image needs 4 variables to be set :
-- `MEGA_NZ_EMAIL` your Mega.nz email
-- `MEGA_NZ_PASSWORD` your Mega.nz password
+- `MEGA_IO_EMAIL` your Mega.io email
+- `MEGA_IO_PASSWORD` your Mega.io password
 - `MC_SERVER_CONTAINER_NAME` the name you gave to your server's container with the `--name` option.
 - `MC_SERVER_RCON_PASSWORD` the password you set up in the `rcon-password` field of your `server.properties`.
 
@@ -52,7 +52,7 @@ For example :
 docker run --name my_minecraft_server -p 25565:25565 --network=your_network_name -v my_minecraft_server_volume:/home/minecraft/conf --rm -d tag_of_your_image:latest
 ```
 
-Once the server is started, you can run the backuper every time you want to backup your world. (More than once a minute will generate an error when uploading to Mega.nz).
+Once the server is started, you can run the backuper every time you want to backup your world. (More than once a minute will generate an error when uploading to Mega.io).
 It expects the volume you created for the minecraft server to be mounted on `/home/minecraft/mountpoint`.
 
 This is what the command line might look like:

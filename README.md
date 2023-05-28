@@ -1,4 +1,4 @@
-# A Mega.nz minecraft server backuper image
+# A Mega.io minecraft server backuper image
 
 This image is meant to be run on a sibling container running [this minecraft server](https://github.com/debilausaure/docker_slim_minecraft_server) image.
 Its purpose is to make a compressed tar of the minecraft world running on the sibling container, and to upload it to Mega.nz.

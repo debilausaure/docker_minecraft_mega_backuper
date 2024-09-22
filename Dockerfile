@@ -1,14 +1,14 @@
-#Minimal build image
+# Minimal build image
 FROM alpine:latest AS builder
 
 RUN apk add --no-cache gcc musl-dev
 
-#Get the statically built megatools binary and extract it
-RUN wget https://megatools.megous.com/builds/builds/megatools-1.11.0.20220519-linux-x86_64.tar.gz -q -O megatools.tar.xz \
+# Get the statically built megatools binary and extract it
+RUN wget https://megatools.megous.com/builds/builds/megatools-1.11.1.20230212-linux-x86_64.tar.gz -q -O megatools.tar.xz \
  && mkdir -p megatools \
  && tar -xzf megatools.tar.xz -C megatools --strip-components=1
 
-#Statically compile mcrcon
+# Statically compile mcrcon
 RUN wget -q https://raw.githubusercontent.com/Tiiffi/mcrcon/master/mcrcon.c \
  && gcc -std=gnu99 -Wpedantic -Wall -Wextra -Os -s -static -o mcrcon mcrcon.c
 
@@ -33,5 +33,7 @@ VOLUME /home/minecraft/mountpoint
 #copy the script to the home of the new user
 WORKDIR /home/minecraft
 COPY --chown=minecraft:minecraft backup.sh .
+# Copy the crendentials file from the repository
+COPY --chown=minecraft:minecraft credentials /home/minecraft/credentials
 
 ENTRYPOINT ["./backup.sh"]

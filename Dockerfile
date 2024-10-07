@@ -33,7 +33,5 @@ VOLUME /home/minecraft/mountpoint
 #copy the script to the home of the new user
 WORKDIR /home/minecraft
 COPY --chown=minecraft:minecraft backup.sh .
-# Copy the crendentials file from the repository
-COPY --chown=minecraft:minecraft credentials /home/minecraft/credentials
 
 ENTRYPOINT ["./backup.sh"]

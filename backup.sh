@@ -11,10 +11,34 @@ tar -czf ../backup.tar.gz banned-ips.json banned-players.json config eula.txt fa
 rm -rf logs/*.log.gz
 cd ..
 
-# Announcing backup upload
-mcrcon -s -H minecraft_server -p rconpassword "say Uploading backup..."
+# Get remaining space in the mega.nz storage
+MEGA_FREE_SPACE=$(megatools df --mb --config $MEGA_CREDS --free)
 
-# Uploading backup to Mega.io
+# Get the backup size
+BACKUP_SIZE=$(du -m backup.tar.gz | cut -f1)
+
+while [ $MEGA_FREE_SPACE -lt $BACKUP_SIZE ]
+do
+   # Announcing lack of space
+   mcrcon -s -H minecraft_server -p rconpassword "say Out of storage ! Removing oldest backup..."
+
+   # list and sort files under /Root, ignore the first entry (/Root), take the first of the list
+   OLDEST_BACKUP=$(megatools ls --config $MEGA_CREDS /Root | sort | tail -n +2 | head -1)
+
+   # Remove the oldest backup
+   megatools rm --config $MEGA_CREDS $OLDEST_BACKUP
+
+   # Announcing suppression of backup
+   mcrcon -s -H minecraft_server -p rconpassword "say Removed backup \"$OLDEST_BACKUP\""
+
+   # Get remaining space in the storage Mega.nz
+   MEGA_FREE_SPACE=$(megatools df --mb --config $MEGA_CREDS --free)
+done
+
+# Announcing backup upload
+mcrcon -s -H minecraft_server -p rconpassword "say Uploading backup (${BACKUP_SIZE}MB)..."
+
+# Uploading backup to mega.nz
 megatools put --config $MEGA_CREDS backup.tar.gz --no-progress --disable-previews\
    --path /Root/$(date +%Y-%m-%d-%Hh%M).tar.gz
 

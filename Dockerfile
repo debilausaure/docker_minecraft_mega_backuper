@@ -4,7 +4,7 @@ FROM alpine:latest AS builder
 RUN apk add --no-cache gcc musl-dev
 
 # Get the statically built megatools binary and extract it
-RUN wget https://megatools.megous.com/builds/builds/megatools-1.11.1.20230212-linux-x86_64.tar.gz -q -O megatools.tar.xz \
+RUN wget https://xff.cz/megatools/builds/builds/megatools-1.11.4.20250411-linux-x86_64.tar.gz -q -O megatools.tar.xz \
  && mkdir -p megatools \
  && tar -xzf megatools.tar.xz -C megatools --strip-components=1
 
